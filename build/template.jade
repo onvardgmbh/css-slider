@@ -1,0 +1,32 @@
+- var config = { 
+-   count: 6,                // total count of slides in this slider
+-   default_slide: 2,        // slide showed by default 
+-   infinity: false,         // if true navigation dots apears inside of slider box
+-   inside: false,           // if true dots inside of slider
+-   group_name: 'slides',    // each slider on page has to have another group name 
+- }
+
+- var _list = new Array(config.count);
+div.csslider#slider1(class=(config.inside? 'inside ':'') + (config.infinity? 'infinity':''))
+
+    each _ , i in _list
+      input(type='radio', 
+            name=config.group_name, 
+            checked=(config.default_slide == i+1), 
+            id=config.group_name+'_'+(i+1))
+
+    ul
+      each _ , i in _list
+        li Slide #{i+1}
+    div.arrows
+      each _ , i in _list
+        label(for=config.group_name+'_'+(i+1))
+      label(for=config.group_name+'_'+1, class="goto-first")
+      label(for=config.group_name+'_'+config.count, class="goto-last")
+        
+    div.navigation 
+      div
+        each _ , i in _list
+          label(for=config.group_name+'_'+(i+1))
+
+      

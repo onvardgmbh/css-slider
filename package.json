@@ -1,0 +1,24 @@
+{
+  "name": "css-slider",
+  "version": "0.0.1",
+  "description": "CSS Slider ==========",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onvardgmbh/css-slider.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/onvardgmbh/css-slider/issues"
+  },
+  "homepage": "https://github.com/onvardgmbh/css-slider#readme"
+}
