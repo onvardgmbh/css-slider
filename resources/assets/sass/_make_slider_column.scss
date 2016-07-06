@@ -1,0 +1,73 @@
+@for $i from 1 through $number_slides {
+  .csslider > input:nth-of-type(#{$i}):checked ~ ul li:first-of-type {
+    margin-left: #{ ($i - 1) * - $width};
+  }
+}
+.csslider > ul > li {
+  width: $width;
+}
+.csslider > .navigation label {
+  &:nth-of-type(3n):not(:nth-last-of-type(3)) {
+    display: none;
+  }
+  &:nth-of-type(3n + 2):not(:nth-last-of-type(3)) {
+    display: none;
+  }
+  &:nth-last-of-type(2):not(:nth-last-of-type(3)) {
+  display: none;
+  }
+  &:nth-last-of-type(1):not(:nth-last-of-type(3)) {
+  display: none;
+  }
+}
+
+//Arrows Left
+%show-label-left-mixin {
+    display: block;
+    left: 0;
+    transform: rotate(45deg);
+}
+@for $i from 1 through $number_slides {
+  $offset : (($i + 2) % 3);
+  @if $offset == 0 {
+    $offset : 3;
+  }
+  .csslider > input:nth-of-type(#{$i}):checked ~ .navigation label:nth-of-type(#{$i + 2}):not(:nth-last-of-type(-n + 3)):after {
+    opacity: 1;
+  }
+
+  .csslider > input:nth-of-type(#{$i}):checked ~ .arrows label:nth-of-type(#{$i - $offset} ) {
+    @extend %show-label-left-mixin;
+  }
+}
+
+//Arrows Right
+%show-label-right-mixin {
+  display: block;
+  right: 0;
+  transform: rotate(225deg);
+}
+@for $i from 1 through $number_slides {
+  $offset : 3 - (($i + 2) % 3);
+  .csslider > input:nth-of-type(#{$i}):checked ~ .arrows label:nth-of-type(#{$i + $offset}):not(:nth-last-of-type(-n + 2)) {
+    @extend %show-label-right-mixin;
+  }
+}
+
+//Cases with number(sizes) mod 3 != 0
+.csslider > input:nth-of-type(3n+1):nth-last-of-type(5):checked ~ .arrows label:nth-last-of-type(3),
+.csslider > input:nth-of-type(3n+1):nth-last-of-type(4):checked ~ .arrows label:nth-last-of-type(3),
+.csslider > input:nth-of-type(3n+2):nth-last-of-type(4):checked ~ .arrows label:nth-last-of-type(3) {
+  @extend %show-label-right-mixin;
+}
+
+// Infinity Cases
+.csslider.infinity > input:last-of-type:checked ~ .arrows label:first-of-type,
+.csslider.infinity > input:nth-last-of-type(3):checked ~ .arrows label:nth-of-type(1), 
+.csslider.infinity > input:nth-last-of-type(2):checked ~ .arrows label:nth-of-type(1), 
+.csslider.infinity > input:nth-last-of-type(1):checked ~ .arrows label:nth-of-type(1) {
+  @extend %show-label-right-mixin;
+}
+.csslider.infinity > input:first-of-type:checked ~ .arrows label:nth-last-of-type(3) {
+  @extend %show-label-left-mixin;
+}
