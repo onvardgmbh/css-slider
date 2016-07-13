@@ -1,5 +1,5 @@
-$width: 100%;
-$number_slides: 20;
+$width: 100% !default;
+$number_slides: 20 !default;
 .csslider {
   perspective: 1300px;
   display: inline-block;
@@ -100,7 +100,7 @@ $number_slides: 20;
 %opacity1 {
   opacity: 1;
 }
-@for $i from 1 through $number_slides { 
+@for $i from 1 through $number_slides {
   .csslider > input:nth-of-type(#{$i}):checked ~ .navigation label:nth-of-type(#{$i}):after {
     @extend %opacity1;
   }
@@ -149,7 +149,7 @@ $number_slides: 20;
   }
   .csslider.infinity > input:first-of-type:checked ~ .arrows.left label:last-of-type {
       @extend %show-label-left;
-  }  
+  }
   %show-label-right {
     display: block;
     right: 0;
@@ -164,9 +164,4 @@ $number_slides: 20;
   .csslider.infinity > input:last-of-type:checked ~ .arrows.right label:first-of-type {
     @extend %show-label-right;
   }
-}
-
-$columns: 3;
-@media(min-width: 1200px) {
-  @import 'make_slider_column';
 }

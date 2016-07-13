@@ -1,0 +1,8 @@
+$width: 100%;
+$number_slides: 20;
+@import 'slider';
+
+$columns: 3;
+@media(min-width: 1200px) {
+  @import 'make_slider_column';
+}

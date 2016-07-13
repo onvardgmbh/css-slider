@@ -22,6 +22,6 @@ elixir.config.notifications = true;
 elixir(function(mix) {
 
     // Styles
-    mix.sass('slider.scss', 'css/slider.css');
+    mix.sass('slider-example.scss', 'css/slider.css');
     mix.scripts(['slider.js'], 'js/slider.js');
 });
