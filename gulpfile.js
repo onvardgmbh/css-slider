@@ -23,4 +23,5 @@ elixir(function(mix) {
 
     // Styles
     mix.sass('slider.scss', 'css/slider.css');
+    mix.scripts(['slider.js'], 'js/slider.js');
 });
