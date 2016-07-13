@@ -39,7 +39,7 @@ $number_slides: 20;
   font-size: 15px;
   font-size: initial;
   line-height: normal;
-  transition: all 2s ease;
+  transition: all .6s ease;
   background-size: cover;
   vertical-align: top;
   box-sizing: border-box;
@@ -143,11 +143,11 @@ $number_slides: 20;
     transform: rotate(45deg);
   }
   @for $i from 1 through $number_slides {
-    .csslider > input:nth-of-type(#{$i}):checked ~ .arrows label:nth-of-type(#{$i - 1}) {
+    .csslider > input:nth-of-type(#{$i}):checked ~ .arrows.left label:nth-of-type(#{$i - 1}) {
       @extend %show-label-left;
     }
   }
-  .csslider.infinity > input:first-of-type:checked ~ .arrows label:last-of-type {
+  .csslider.infinity > input:first-of-type:checked ~ .arrows.left label:last-of-type {
       @extend %show-label-left;
   }  
   %show-label-right {
@@ -157,16 +157,16 @@ $number_slides: 20;
   }
 
   @for $i from 1 through $number_slides {
-    .csslider > input:nth-of-type(#{$i}):checked ~ .arrows label:nth-of-type(#{$i + 1}) {
+    .csslider > input:nth-of-type(#{$i}):checked ~ .arrows.right label:nth-of-type(#{$i + 1}) {
       @extend %show-label-right;
     }
   }
-  .csslider.infinity > input:last-of-type:checked ~ .arrows label:first-of-type {
+  .csslider.infinity > input:last-of-type:checked ~ .arrows.right label:first-of-type {
     @extend %show-label-right;
   }
 }
 
-$width: 33.3333%;
+$columns: 3;
 @media(min-width: 1200px) {
   @import 'make_slider_column';
 }

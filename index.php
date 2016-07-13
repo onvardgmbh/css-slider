@@ -175,7 +175,16 @@
         		}
         	?>
         </ul>
-        <div class="arrows">
+        <div class="arrows left">
+        <?php 
+            for($i = 1; $i < 20; $i++) {
+                ?>
+            <label for="slides_<?=$i?>"></label>
+                <?php
+            }
+        ?>
+        </div>
+        <div class="arrows right">
         <?php 
             for($i = 1; $i < 20; $i++) {
                 ?>
