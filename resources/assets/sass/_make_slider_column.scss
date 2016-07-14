@@ -8,22 +8,24 @@
   width: (100% / $columns);
 }
 
-.csslider > .navigation label {
-  &:nth-of-type(#{$columns}n):not(:nth-last-of-type(#{$columns})) {
-    display: none;
-  }
+@if $columns > 1 {
+  .csslider > .navigation > label {
+    &:nth-of-type(#{$columns}n):not(:nth-last-of-type(#{$columns})) {
+      display: none;
+    }
 
-  @if ($columns - 1) > 1 {
-    @for $i from 2 through ($columns - 1) {
-      &:nth-of-type(#{$columns}n + #{$i}):not(:nth-last-of-type(#{$columns})) {
-        display: none;
+    @if $columns > 2 {
+      @for $i from 2 through ($columns - 1) {
+        &:nth-of-type(#{$columns}n + #{$i}):not(:nth-last-of-type(#{$columns})) {
+          display: none;
+        }
       }
     }
-  }
 
-  @for $i from 1 through ($columns - 1) {
-    &:nth-last-of-type(#{$i}) {
-    display: none;
+    @for $i from 1 through ($columns - 1) {
+      &:nth-last-of-type(#{$i}) {
+        display: none;
+      }
     }
   }
 }
@@ -53,10 +55,12 @@
 }
 
 //Cases with number(sizes) mod $columns != 0
-@for $i from 1 through ($columns - 1) {
-  @for $ii from 1 through ($columns - $i) {
-    .csslider > input:nth-of-type(#{$columns}n + #{$i}):nth-last-of-type(#{$columns + $ii}):checked ~ .arrows.right label:nth-last-of-type(#{$columns}) {
-      display: block;
+@if $columns > 1 {
+  @for $i from 1 through ($columns - 1) {
+    @for $ii from 1 through ($columns - $i) {
+      .csslider > input:nth-of-type(#{$columns}n + #{$i}):nth-last-of-type(#{$columns + $ii}):checked ~ .arrows.right label:nth-last-of-type(#{$columns}) {
+        display: block;
+      }
     }
   }
 }
