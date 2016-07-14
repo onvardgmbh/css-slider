@@ -1,4 +1,5 @@
 /* CSS Slider - gulpfile.js
+ * ========================
  * Adapted from <https://www.sitepoint.com/simple-gulpy-workflow-sass/>
  */
 
