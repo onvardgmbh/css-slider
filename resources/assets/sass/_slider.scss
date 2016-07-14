@@ -95,45 +95,11 @@ $slider-arrow-offset: 30px !default;
   }
 
   > .arrows {
-    position: absolute;
-    top: 50%;
-    box-sizing: content-box;
     user-select: none;
 
     > label {
       display: none;
-      position: absolute;
-      padding: 13px;
-      box-shadow: inset 2px -2px 0 1px #d1d1d1;
       cursor: pointer;
-
-      &:hover {
-        box-shadow: inset 3px -3px 0 2px #0097ef;
-        margin: 0 0px;
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-      }
-    }
-
-    &.left {
-      left: -$slider-arrow-offset;
-
-      > label {
-        left: 0;
-        transform: rotate(45deg);
-      }
-    }
-
-    &.right {
-      right: -$slider-arrow-offset;
-
-      > label {
-        right: 0;
-        transform: rotate(225deg);
-      }
     }
   }
 }
