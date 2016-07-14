@@ -3,11 +3,14 @@
 @import 'make-columns';
 
 @mixin slider-base ($slide-num) {
+	position: relative; // Position children relative to the slider
+
 	> .slides {
-		position: relative; // Position children relative to this
 		font-size: 0; // Ignore whitespace between elements with display:inline-block
 		overflow: hidden; // Hide slides that scroll off to the sides
 		white-space: nowrap; // Keep the slides on one line
+		list-style-type: none; // No bullets
+		padding-left: 0; // No padding for bullets
 
 		> li {
 			display: inline-block; // Put all slides on one line
@@ -16,7 +19,7 @@
 			font-size: initial; // For all real browsers
 			vertical-align: top; // Default of middle is usually not what we want
 			white-space: normal; // Reset because of :nowrap above
-			transition: margin .5s;
+			transition: margin .5s, width .2s;
 		}
 	}
 
@@ -29,24 +32,40 @@
 		> label {
 			display: inline-block; // Put dots on one line
 			cursor: pointer; // Convey clickability
+			background-color: #eee;
+			border-radius: 50%;
+			padding: 5px;
 
 			&::before {
 				content: '';
+				background-color: #fa0;
 				border-radius: 50%;
-				padding: 0.5em;
+				padding: 3px;
+				position: absolute; // Do not take up space in the label
+				transform: translate(-50%, -50%); // Center
 			}
 		}
 	}
 
 	> .arrows {
+		position: absolute; // Take the arrows out of the flow
+		height: 100%; // Stretch the arrow container to slider height
+		top: 0; // Align with slider
+
 		> label {
 			display: none; // Hide all arrows by default
+			position: relative; // Take up space, so we push the container left
+			top: 50%; // Center vertically, part 1...
+			transform: translateY(-50%); // ...part 2
+			user-select: none; // Do not select arrows if user double clicks
 		}
 
 		&.left {
+			right: 100%; // Left of the slider
 		}
 
 		&.right {
+			left: 100%; // Right of the slider
 		}
 	}
 }

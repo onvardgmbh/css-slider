@@ -4,16 +4,22 @@
 
 $max-slides: 10;
 
-/* Your slider class */
-.csslider {
+
+.csslider { // Your slider class
+	// Initialize this as a basic slider
 	@include slider-base($max-slides);
 
-	@media (max-width: 600px) {
+	// Customize it
+	margin: 0 20px;
+
+	// Add 1 column sliding FIXME
+	@media (max-width: 400px) {
 		background-color: #fa0;
 		@include paginate(1, $max-slides);
 	}
 
-	@media (min-width: 601px) {
+	// Add multi column
+	@media (min-width: 401px) {
 		background-color: #a0f;
 		@include paginate(3, $max-slides);
 	}

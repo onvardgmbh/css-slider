@@ -1,20 +1,38 @@
 /* make-columns */
 
-@mixin paginate($per-page, $slides-num) {
-	> .slides > li {width: 100% / $per-page}
+@mixin paginate($n, $slides-num) {
+	> .slides > li {width: 100% / $n}
 
 	@for $i from 0 to $slides-num {
 		> input:nth-of-type(#{$i + 1}):checked ~ .slides > li:first-of-type {
-			margin-left: $i * -100% / $per-page;
+			margin-left: $i * -100% / $n; // Slide the slides to the left
 		}
 	}
 
-	@if $per-page > 1 {
-		> .dots > label {
+	> .dots > label {
+		display: none; // Hide all dots by default
 
-			/* Hide unneeded dots */
-			&:not(nth-of-type(#{$num}n)):not(:nth-last-of-type(#{$num})) {
-				display: none;
+		// Show the ones we want
+		&:nth-last-of-type(#{$n}), // The last page, the leftmost slide for all other pages:
+		&:nth-of-type(#{$n}n-#{$n - 1}):not(:nth-last-of-type(-n+#{$n})) {
+			display: inline;
+		}
+	}
+
+	> .arrows {
+		> label {
+			display: none; // Hide all arrows by default
+		}
+	}
+
+	// Show the correct arrows
+	@for $i from 0 to $slides-num {
+		> input:nth-of-type(#{$i + 1}):checked {
+			// Left arrow
+			~ .arrows:not(.right) > label:nth-of-type(#{$i}),
+			// Right arrow
+			~ .arrows:not(.left) > label:nth-of-type(#{$i + 2}) {
+				display: block;
 			}
 		}
 	}
