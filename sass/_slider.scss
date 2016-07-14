@@ -1,0 +1,52 @@
+/* slider */
+
+@import 'make-columns';
+
+@mixin slider-base ($slide-num) {
+	> .slides {
+		position: relative; // Position children relative to this
+		font-size: 0; // Ignore whitespace between elements with display:inline-block
+		overflow: hidden; // Hide slides that scroll off to the sides
+		white-space: nowrap; // Keep the slides on one line
+
+		> li {
+			display: inline-block; // Put all slides on one line
+			width: 100%; // One slide per page by default
+			font-size: 15px; // For "browsers" that do not support :initial
+			font-size: initial; // For all real browsers
+			vertical-align: top; // Default of middle is usually not what we want
+			white-space: normal; // Reset because of :nowrap above
+			transition: margin .5s;
+		}
+	}
+
+	> .dots {
+		position: absolute;
+		left: 50%; // Center horizontally, part 1 ...
+		transform: translate(-50%); // ... part 2
+		font-size: 0; // Ignore whitespace between elements
+
+		> label {
+			display: inline-block; // Put dots on one line
+			cursor: pointer; // Convey clickability
+
+			&::before {
+				content: '';
+				border-radius: 50%;
+				padding: 0.5em;
+			}
+		}
+	}
+
+	> .arrows {
+		> label {
+			display: none; // Hide all arrows by default
+		}
+
+		&.left {
+		}
+
+		&.right {
+		}
+	}
+}

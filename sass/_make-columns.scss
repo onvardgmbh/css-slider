@@ -1,0 +1,21 @@
+/* make-columns */
+
+@mixin paginate($per-page, $slides-num) {
+	> .slides > li {width: 100% / $per-page}
+
+	@for $i from 0 to $slides-num {
+		> input:nth-of-type(#{$i + 1}):checked ~ .slides > li:first-of-type {
+			margin-left: $i * -100% / $per-page;
+		}
+	}
+
+	@if $per-page > 1 {
+		> .dots > label {
+
+			/* Hide unneeded dots */
+			&:not(nth-of-type(#{$num}n)):not(:nth-last-of-type(#{$num})) {
+				display: none;
+			}
+		}
+	}
+}

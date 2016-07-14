@@ -1,0 +1,13 @@
+{
+  "name": "css-slider",
+  "description": "Pure CSS Slider with resonsive pagination",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "https://github.com/onvardgmbh/css-slider.git",
+  "devDependencies": {
+    "gulp": "3.9.*",
+    "gulp-sass": "2.3.*",
+    "gulp-sourcemaps": "1.6.*",
+    "gulp-autoprefixer": "3.1.*"
+  }
+}
