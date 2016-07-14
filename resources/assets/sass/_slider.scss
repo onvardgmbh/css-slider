@@ -1,0 +1,139 @@
+$slider-max-slides: 20 !default;
+$slider-transition-duration: .6s !default;
+$slider-nav-background-color: #d1d1d1 !default;
+$slider-nav-background-radius: 5px !default;
+$slider-nav-padding: 2px !default;
+$slider-nav-active-color: #0097ef !default;
+$slider-nav-active-radius: 3px !default;
+$slider-arrow-offset: 30px !default;
+
+.csslider {
+  display: inline-block;
+  text-align: left;
+  position: relative;
+
+  > input {
+    display: none;
+
+    @for $i from 1 through $slider-max-slides {
+      &:nth-of-type(#{$i}):checked ~ ul li:first-of-type {
+        margin-left: #{ ($i - 1) * - 100%};
+      }
+    }
+  }
+
+  > ul {
+    position: relative;
+    font-size: 0;
+    overflow: hidden;
+    user-select: none;
+    white-space: nowrap;
+
+    > li {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      font-size: 15px;
+      font-size: initial;
+      transition: all $slider-transition-duration ease;
+      vertical-align: top;
+      white-space: normal;
+
+      &.scrollable {
+        overflow-y: scroll;
+      }
+    }
+  }
+
+  > .navigation {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    z-index: 10;
+    margin-bottom: -10px;
+    font-size: 0;
+    user-select: none;
+    transform: translate(-50%);
+
+    > label {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      border-radius: 50%;
+      margin: 0 $slider-nav-padding;
+      padding: $slider-nav-background-radius;
+      background: $slider-nav-background-color;
+
+      &:hover::after {
+        opacity: 1;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -$slider-nav-active-radius;
+        margin-top: -$slider-nav-active-radius;
+        background: $slider-nav-active-color;
+        border-radius: 50%;
+        padding: $slider-nav-active-radius;
+        opacity: 0;
+      }
+    }
+  }
+
+  &.inside > .navigation {
+    bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  @for $i from 1 through $slider-max-slides {
+    > input:nth-of-type(#{$i}):checked ~ .navigation label:nth-of-type(#{$i})::after {
+      opacity: 1;
+    }
+  }
+
+  > .arrows {
+    position: absolute;
+    top: 50%;
+    box-sizing: content-box;
+    user-select: none;
+
+    > label {
+      display: none;
+      position: absolute;
+      padding: 13px;
+      box-shadow: inset 2px -2px 0 1px #d1d1d1;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: inset 3px -3px 0 2px #0097ef;
+        margin: 0 0px;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+      }
+    }
+
+    &.left {
+      left: -$slider-arrow-offset;
+
+      > label {
+        left: 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    &.right {
+      right: -$slider-arrow-offset;
+
+      > label {
+        right: 0;
+        transform: rotate(225deg);
+      }
+    }
+  }
+}
