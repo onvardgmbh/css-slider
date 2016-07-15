@@ -28,10 +28,12 @@
 	// Show the correct arrows
 	@for $i from 0 to $slides-num {
 		> input:nth-of-type(#{$i + 1}):checked {
+			-debug-i: $i;
+			-debug-p: #{$i - $i % $n};
 			// Left arrow
-			~ .arrows:not(.right) > label:nth-of-type(#{$i}),
+			~ .arrows:not(.right) > label:nth-of-type(#{($i - $i % $n) - $n + 1}),
 			// Right arrow
-			~ .arrows:not(.left) > label:nth-of-type(#{($i - $i % $n + 1) * $n + 1}) {
+			~ .arrows:not(.left) > label:nth-of-type(#{($i - $i % $n) + $n + 1}) {
 				display: block;
 			}
 		}

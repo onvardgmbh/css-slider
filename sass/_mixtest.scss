@@ -1,6 +1,10 @@
 /* mixin */
 
 @mixin test ($num, $width, $color) {
+	%placeho {
+		color: #abc;
+	}
+
   background-color: $color;
 
   @if $num > 3 {
@@ -9,5 +13,6 @@
 
   @for $i from 0 through $num {
     &:nth-child(#{$i}) {left: $i * $width}
+    @extend %placeho;
   }
 }
