@@ -9,12 +9,18 @@
 		var radios = Array.prototype.slice.call(slider.querySelectorAll('input'));
 		var active;
 		var touchStartX;
+		var touchStartY;
 		var deltaX;
+		var deltaY;
+		var scrolling;
 
 		function onTouchstart(event) {
 			var touch = event.touches ? event.touches[0] : event;
 			touchStartX = touch.pageX;
+			touchStartY = touch.pageY;
 			deltaX = 0;
+			deltaY = 0;
+			scrolling = undefined;
 
 			active = radios
 				.map(function(el) {
@@ -25,17 +31,22 @@
 			// Add event listeners needed during drag
 			slider.addEventListener('touchmove', onTouchmove);
 			slider.addEventListener('touchend', onTouchend);
-			slider.addEventListener('mousemove', onTouchmove);
-			slider.addEventListener('mouseleave', onTouchend);
-			slider.addEventListener('mouseup', onTouchend);
 		}
 
 		function onTouchmove(event) {
 			var touch = event.touches ? event.touches[0] : event;
-			deltaX =  touch.pageX - touchStartX;
+			deltaX = touch.pageX - touchStartX;
+			deltaY = touch.pageY - touchStartY;
 
-			firstSlide.style.transition = 'none'; // Disable transitions during dragging
-			firstSlide.style.marginLeft = deltaX - firstSlide.offsetWidth * active + 'px';
+			if (typeof scrolling === 'undefined') {
+				scrolling = deltaX < deltaY;
+			}
+
+			if (!scrolling) {
+				event.preventDefault();
+				firstSlide.style.transition = 'none'; // Disable transitions during dragging
+				firstSlide.style.marginLeft = deltaX - firstSlide.offsetWidth * active + 'px';
+			}
 		}
 
 		function onTouchend(event) {
@@ -55,13 +66,9 @@
 			// Remove event listeners that are only needed during drag
 			slider.removeEventListener('touchmove', onTouchmove);
 			slider.removeEventListener('touchend', onTouchend);
-			slider.removeEventListener('mousemove', onTouchmove);
-			slider.removeEventListener('mouseleave', onTouchend);
-			slider.removeEventListener('mouseup', onTouchend);
 		}
 
 		slider.addEventListener('touchstart', onTouchstart);
-		slider.addEventListener('mousedown', onTouchstart);
 	}
 
 	/**
