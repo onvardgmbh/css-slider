@@ -20,18 +20,17 @@ $max-slides: 10;
 	// Add 1 column sliding FIXME
 	@media (max-width: 400px) {
 		background-color: #fa0;
-		@include paginate(1, $max-slides);
+		@include paginate(3, $max-slides);
 	}
 
 	// Add as many ulti column configurations as you want
 	@media (min-width: 401px) {
 		background-color: #0af;
-		@include paginate(3, $max-slides);
-	}
 
-	@for $i from 1 through 4 {
-		@at-root input[name="set-cols"]:nth-of-type(#{$i}):checked ~ & {
-			@include paginate($i, $max-slides);
+		@for $i from 1 through 4 {
+			@at-root input[name="set-cols"]:nth-of-type(#{$i}):checked ~ & {
+				@include paginate($i, $max-slides);
+			}
 		}
 	}
 }
