@@ -1,8 +1,4 @@
-/* make-columns */
-
-// Loop indices are 0-based, :nth-x selectors are 1-based, take care
-
-@mixin paginate($n, $slides-num) {
+@mixin paginate($n) {
 	> .slides > li {width: 100% / $n}
 
 	> .arrows > label {
@@ -20,8 +16,11 @@
 	}
 
 	// For all possible checked radios
-	@for $i from 0 to $slides-num {
+	// Loop indices are 0-based, :nth-x selectors are 1-based, take care
+	@for $i from 0 to $css-slider-max-slides {
 		> input:nth-of-type(#{$i + 1}):checked {
+			//TODO Highlight current dot
+
 			// Left arrow on standard pages
 			@if $i >= $n {
 				~ .arrows:not(.right) > label:nth-of-type(#{($i - $i % $n) - $n + 1}) {

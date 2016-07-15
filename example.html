@@ -5,6 +5,9 @@
 
 <link rel="stylesheet" href="dist/slider-example.css">
 
+<h1>Responsive multi-column plain-CSS-Slider</h1>
+
+<!-- Column number chooser -->
 Columns
 <input type="radio" id="set-cols-1" name="set-cols">
 	<label for="set-cols">1</label>
@@ -15,8 +18,9 @@ Columns
 <input type="radio" id="set-cols-4" name="set-cols">
 	<label for="set-cols">4</label>
 
-<div class="csslider">
+<div class="css-slider">
 
+	<!-- 1: A radio button for each slide -->
 	<input type="radio" name="slider1" id="slider1-0" checked>
 	<input type="radio" name="slider1" id="slider1-1">
 	<input type="radio" name="slider1" id="slider1-2">
@@ -26,6 +30,7 @@ Columns
 	<input type="radio" name="slider1" id="slider1-6">
 	<input type="radio" name="slider1" id="slider1-7">
 
+	<!-- 2: A list with class 'slides' containing the slides -->
 	<ul class="slides">
 		<li>Slide 1</li>
 		<li>Slide 2</li>
@@ -37,7 +42,8 @@ Columns
 		<li>Slide 8</li>
 	</ul>
 
-	<div class="navigation dots">
+	<!-- 3: A div with class 'dots' containing labels for all radios -->
+	<div class="dots">
 		<label for="slider1-0"></label>
 		<label for="slider1-1"></label>
 		<label for="slider1-2"></label>
@@ -48,6 +54,9 @@ Columns
 		<label for="slider1-7"></label>
 	</div>
 
+	<!-- 3: Either a single div with class 'arrows' containing labels
+	for all radios, or two divs with class 'arrows' and classes 'left'
+	and 'right' respectively -->
 	<div class="arrows left">
 		<label for="slider1-0">&larr;</label>
 		<label for="slider1-1">&larr;</label>
@@ -69,6 +78,5 @@ Columns
 		<label for="slider1-6">&rarr;</label>
 		<label for="slider1-7">&rarr;</label>
 	</div>
-
 
 </div>

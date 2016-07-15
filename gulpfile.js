@@ -11,6 +11,8 @@ const sourcemaps = require('gulp-sourcemaps');
 const src = 'sass/**/*.scss';
 const dest = 'dist';
 
+gulp.task('default', ['sass'])
+
 gulp.task('sass', function() {
 	return gulp
 		.src(src)
@@ -21,7 +23,14 @@ gulp.task('sass', function() {
 		.pipe(gulp.dest(dest));
 });
 
-gulp.task('watch', function() {
+gulp.task('dist', function() {
+	return gulp
+		.src(src)
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(gulp.dest(dest));
+});
+
+gulp.task('watch', ['sass'], function() {
 	return gulp
 		.watch(src, ['sass'])
 		.on('change', function(event) {

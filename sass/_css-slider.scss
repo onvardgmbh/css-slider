@@ -1,12 +1,14 @@
-/* slider */
+// Set all needed variables to their default values
+$css-slider-max-slides: 20 !default;
+$css-slider-transition-duration: .5s !default;
 
-@import 'make-columns';
+@import 'paginate';
 
-@mixin slider-base ($slide-num) {
+@mixin slider-base () {
 	position: relative; // Position children relative to the slider
 
 	> input {
-		//DEBUGdisplay: none; // Hide the radio buttons
+		display: none; // Hide the radio buttons
 	}
 
 	> .slides {
@@ -14,7 +16,7 @@
 		overflow: hidden; // Hide slides that scroll off to the sides
 		white-space: nowrap; // Keep the slides on one line
 		list-style-type: none; // No bullets
-		padding-left: 0; // No padding for bullets
+		padding-left: 0; // Remove list-padding for bullets
 
 		> li {
 			display: inline-block; // Put all slides on one line
@@ -24,7 +26,8 @@
 			vertical-align: top; // Default of middle is usually not what we want
 			white-space: normal; // Reset because of :nowrap above
 			box-sizing: border-box; // Width:100% should include padding
-			transition: margin .5s, width .5s;
+			transition: margin $css-slider-transition-duration,
+				width $css-slider-transition-duration;
 		}
 	}
 
@@ -34,6 +37,11 @@
 		transform: translate(-50%); // ... part 2
 		font-size: 0; // Ignore whitespace between elements
 		white-space: nowrap; // Keep dots on one line
+		margin-top: 10px; // Put dots under the slides
+
+		&.inside {
+			margin-top: -10px; // Put dots inside the slides
+		}
 
 		> label {
 			cursor: pointer; // Convey clickability
