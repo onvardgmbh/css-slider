@@ -31,9 +31,6 @@
 			// Add event listeners needed during drag
 			slider.addEventListener('touchmove', onTouchmove);
 			slider.addEventListener('touchend', onTouchend);
-			slider.addEventListener('mousemove', onTouchmove);
-			slider.addEventListener('mouseleave', onTouchend);
-			slider.addEventListener('mouseup', onTouchend);
 		}
 
 		function onTouchmove(event) {
@@ -69,13 +66,9 @@
 			// Remove event listeners that are only needed during drag
 			slider.removeEventListener('touchmove', onTouchmove);
 			slider.removeEventListener('touchend', onTouchend);
-			slider.removeEventListener('mousemove', onTouchmove);
-			slider.removeEventListener('mouseleave', onTouchend);
-			slider.removeEventListener('mouseup', onTouchend);
 		}
 
 		slider.addEventListener('touchstart', onTouchstart);
-		slider.addEventListener('mousedown', onTouchstart);
 	}
 
 	/**
