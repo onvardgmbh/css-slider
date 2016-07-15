@@ -31,7 +31,7 @@
 			// Left arrow
 			~ .arrows:not(.right) > label:nth-of-type(#{$i}),
 			// Right arrow
-			~ .arrows:not(.left) > label:nth-of-type(#{$i + 2}) {
+			~ .arrows:not(.left) > label:nth-of-type(#{($i - $i % $n + 1) * $n + 1}) {
 				display: block;
 			}
 		}

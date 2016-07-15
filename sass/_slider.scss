@@ -5,6 +5,10 @@
 @mixin slider-base ($slide-num) {
 	position: relative; // Position children relative to the slider
 
+	> input {
+		display: none; // Hide the radio buttons
+	}
+
 	> .slides {
 		font-size: 0; // Ignore whitespace between elements with display:inline-block
 		overflow: hidden; // Hide slides that scroll off to the sides
@@ -28,13 +32,17 @@
 		left: 50%; // Center horizontally, part 1 ...
 		transform: translate(-50%); // ... part 2
 		font-size: 0; // Ignore whitespace between elements
+		white-space: nowrap; // Keep dots on one line
 
 		> label {
-			display: inline-block; // Put dots on one line
 			cursor: pointer; // Convey clickability
 			background-color: #eee;
 			border-radius: 50%;
 			padding: 5px;
+
+			&:not(:last-child) {
+				margin-right: 5px; // Spacing between dots
+			}
 
 			&::before {
 				content: '';
