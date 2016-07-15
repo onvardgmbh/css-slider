@@ -5,11 +5,6 @@ Plain CSS Slider with responsive pagination.
 
 ## Basic usage
 
-
-## TODO
-- arrows.left
-
-
 ## :nth-last odd case
 
 n: 4, num: 8/7/6/5
