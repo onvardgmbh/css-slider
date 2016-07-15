@@ -39,7 +39,7 @@
 			deltaY = touch.pageY - touchStartY;
 
 			if (typeof scrolling === 'undefined') {
-				scrolling = deltaX < deltaY;
+				scrolling = Math.abs(deltaX) < Math.abs(deltaY);
 			}
 
 			if (!scrolling) {
