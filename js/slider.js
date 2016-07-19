@@ -41,7 +41,7 @@
 		function onTouchend(event) {
 			var perPage = Math.round(firstSlide.parentNode.clientWidth / firstSlide.offsetWidth);
 
-			if (Math.abs(deltaX) > firstSlide.offsetWidth / 2) {
+			if (Math.abs(deltaX) > firstSlide.offsetWidth / 4) {
 				var next = Math.max(0, Math.min(radios.length - perPage, deltaX > 0
 					? active - (active % perPage || perPage) // Next page to the left
 					: active - active % perPage + perPage // Next page to the right
