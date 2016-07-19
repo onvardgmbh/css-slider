@@ -60,6 +60,13 @@ $css-slider-transition-duration: .5s !default;
 				padding: 3px;
 				position: absolute; // Do not take up space in the label
 				transform: translate(-50%, -50%); // Center
+				opacity: 0;
+			}
+
+			&:hover {
+				&::before { 
+					opacity: 1;
+				}
 			}
 		}
 	}

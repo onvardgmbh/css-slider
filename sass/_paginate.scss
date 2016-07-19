@@ -9,7 +9,7 @@
 		display: none; // Hide all dots by default
 
 		// Show the dots for each page
-		&:nth-last-of-type(#{$n}), // The last page, the leftmost slide for all other pages (below)
+		&:last-of-type, // The last page, the leftmost slide for all other pages (below)
 		&:nth-of-type(#{$n}n-#{$n - 1}):not(:nth-last-of-type(-n+#{$n})) {
 			display: inline;
 		}
@@ -60,6 +60,9 @@
 				~ .slides > li:first-of-type {
 					margin-left: ($i - $i % $n) / $n * -100%;
 				}
+			}
+			~ .dots label:nth-of-type(#{$i + 1 }):before {
+				opacity: 1;
 			}
 
 			// For each radio on the last page
