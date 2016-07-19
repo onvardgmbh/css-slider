@@ -14,6 +14,9 @@
 			display: inline;
 		}
 	}
+	> input:nth-last-of-type(#{$n}):checked ~ .dots > label:last-of-type:before {
+		opacity: 1;
+	}
 
 	// For all possible checked radios
 	// Loop indices are 0-based, :nth-x selectors are 1-based, take care
