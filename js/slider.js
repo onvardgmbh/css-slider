@@ -69,7 +69,7 @@
 	 */
 	document.addEventListener('DOMContentLoaded', function() {
 		Array.prototype.forEach.call(
-			document.querySelectorAll('.csslider'),
+			document.querySelectorAll('.css-slider'),
 			setupSlider
 		);
 	});
