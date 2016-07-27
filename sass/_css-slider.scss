@@ -26,7 +26,7 @@ $css-slider-transition-duration: .5s !default;
 			vertical-align: top; // Default of middle is usually not what we want
 			white-space: normal; // Reset because of :nowrap above
 			box-sizing: border-box; // Width:100% should include padding
-			transition: margin $css-slider-transition-duration,
+			transition: transform $css-slider-transition-duration,
 				width $css-slider-transition-duration;
 		}
 	}
