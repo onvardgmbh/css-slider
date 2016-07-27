@@ -6,6 +6,7 @@
 
 	function setupSlider(slider) {
 		var firstSlide = slider.querySelector('ul > li:first-of-type');
+		var slides = slider.querySelectorAll('ul > li');
 		var radios = Array.prototype.slice.call(slider.querySelectorAll('input'));
 		var active;
 		var touchStartX;
@@ -44,8 +45,14 @@
 
 			if (!scrolling) {
 				event.preventDefault();
-				firstSlide.style.transition = 'none'; // Disable transitions during dragging
-				firstSlide.style.marginLeft = deltaX - firstSlide.offsetWidth * active + 'px';
+				Array.prototype.forEach.call(
+					slides,
+					function(slide) {
+						console.log(active)
+						slide.style.transition = 'none'; // Disable transitions during dragging
+						slide.style.transform = 'translate3d(' + (deltaX - firstSlide.offsetWidth * active) + 'px' + ', 0, 0)';
+					}
+				);
 			}
 		}
 
@@ -59,9 +66,13 @@
 				));
 				radios[next].checked = true;
 			}
-
-			firstSlide.style.transition = '';
-			firstSlide.style.marginLeft = '';
+			Array.prototype.forEach.call(
+				slides,
+				function(slide) {
+					slide.style.transition = '';
+					slide.style.transform = '';
+				}
+			);
 
 			// Remove event listeners that are only needed during drag
 			slider.removeEventListener('touchmove', onTouchmove);
@@ -76,7 +87,7 @@
 	 */
 	document.addEventListener('DOMContentLoaded', function() {
 		Array.prototype.forEach.call(
-			document.querySelectorAll('.csslider'),
+			document.querySelectorAll('.css-slider'),
 			setupSlider
 		);
 	});

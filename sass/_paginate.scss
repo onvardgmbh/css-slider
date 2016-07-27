@@ -61,7 +61,7 @@
 			&:not(:nth-last-of-type(-n+#{$n})) {
 				// Slide left by full page-widths
 				~ .slides > li {
-					transform: translate3d(($i - $i % $n) / $n * -100%, 0, 0);
+					transform: translate3d(($i - $i % $n) * -100%, 0, 0);
 				}
 			}
 			~ .dots label:nth-of-type(#{$i + 1 }):before {
@@ -74,7 +74,7 @@
 					// Slide to the last page
 					~ .slides > li {
 						// Slide #{$i - $j} is always the left-most slide on the last page
-						transform: translate3d(($i - $j) * -100% / $n, 0, 0);
+						transform: translate3d(($i - $j) * -100%, 0, 0);
 					}
 				}
 			}
