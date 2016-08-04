@@ -48,7 +48,6 @@
 				Array.prototype.forEach.call(
 					slides,
 					function(slide) {
-						console.log(active)
 						slide.style.transition = 'none'; // Disable transitions during dragging
 						slide.style.transform = 'translate3d(' + (deltaX - firstSlide.offsetWidth * active) + 'px' + ', 0, 0)';
 					}
