@@ -1,4 +1,4 @@
-@mixin paginate($n) {
+@mixin paginate($n, $wrap: true) {
 	> .slides > li {width: 100% / $n}
 
 	> .arrows > label {
@@ -38,15 +38,17 @@
 				}
 			}
 
-			// Left arrow on first page, goes to last slide
-			&:nth-of-type(-n+#{$n}) ~ .arrows:not(.right) > label:last-child {
-				display: block;
-			}
-
-			// Right arrow on last page, goes to first slide
-			&:nth-last-of-type(-n+#{$n}) {
-				~ .arrows:not(.left) > label:first-child {
+			@if $wrap {
+				// Left arrow on first page, goes to last slide
+				&:nth-of-type(-n+#{$n}) ~ .arrows:not(.right) > label:last-child {
 					display: block;
+				}
+
+				// Right arrow on last page, goes to first slide
+				&:nth-last-of-type(-n+#{$n}) {
+					~ .arrows:not(.left) > label:first-child {
+						display: block;
+					}
 				}
 			}
 
