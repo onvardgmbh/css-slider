@@ -31,16 +31,26 @@
 
 			@if $wrap {
 				// Left arrow on first page, goes to last slide
-				&:nth-of-type(-n+#{$n}) ~ .arrows:not(.right) > label:last-child {
-					display: block;
+				@if $scroll-full-page {
+					&:nth-of-type(-n+#{$n}) {
+						~ .arrows:not(.right) > label:last-child {
+							display: block;
+						}
+					}
+				} @else {
+					&:first-of-type {
+						~ .arrows:not(.right) > label:last-child {
+							display: block;
+						}
+					}
 				}
 
 				// Right arrow on last page, goes to first slide
-				&:nth-last-of-type(-n+#{$n}) {
-					~ .arrows:not(.left) > label:first-child {
-						display: block;
+					&:nth-last-of-type(-n+#{$n}) {
+						~ .arrows:not(.left) > label:first-child {
+							display: block;
+						}
 					}
-				}
 			}
 
 			@if $scroll-full-page and $n > 1 {
@@ -80,22 +90,19 @@
 					}
 				}
 
-				// For each radio on the last page
-				@for $j from 0 to $n { // Nested loop! Keep this short
-					&:nth-last-of-type(#{$n - $j}) {
-						// Slide to the last page
-						~ .slides > li {
-							// Slide #{$i - $j} is always the left-most slide on the last page
-							transform: translate3d(($i - $j) * -100%, 0, 0);
-						}
-					}
-				}
-
 			} @else { // Scroll by only one item
 				// Left arrow
 				@if $i > 0 {
-					~ .arrows:not(.right) > label:nth-of-type(#{$i}) {
-						display: block;
+					&:not(:nth-last-of-type(-n+#{$n})) {
+						~ .arrows:not(.right) > label:nth-of-type(#{$i}) {
+							display: block;
+						}
+					}
+
+					&:nth-last-of-type(-n+#{$n}) {
+						~ .arrows:not(.right) > label:nth-last-of-type(#{$n + 1}) {
+							display: block;
+						}
 					}
 				}
 
@@ -105,14 +112,34 @@
 				}
 
 				// Current dot
-				~ .dots label:nth-of-type(#{$i + 1 })::before {
-					opacity: 1;
+				&:not(:nth-last-of-type(-n+#{$n})) {
+					~ .dots label:nth-of-type(#{$i + 1 })::before {
+						opacity: 1;
+					}
+				}
+
+				&:nth-last-of-type(-n+#{$n}) {
+					~ .dots label:nth-last-of-type(#{$n})::before {
+						opacity: 1;
+					}
 				}
 
 				// Slide the slides
-				// FIXME Do not slide the last page further left if one of the last $n - 1 radios is checked
-				~ .slides > li {
-					transform: translate3d($i * -100%, 0, 0);
+				&:not(:nth-last-of-type(-n+#{$n})) {
+					~ .slides > li {
+						transform: translate3d($i * -100%, 0, 0);
+					}
+				}
+			}
+
+			// Show last page for any of the last n radios
+			@for $j from 0 to $n { // Nested loop! Keep this short
+				&:nth-last-of-type(#{$n - $j}) {
+					// Slide to the last page
+					~ .slides > li {
+						// Slide #{$i - $j} is always the left-most slide on the last page
+						transform: translate3d(($i - $j) * -100%, 0, 0);
+					}
 				}
 			}
 		}
