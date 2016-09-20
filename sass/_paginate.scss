@@ -11,7 +11,7 @@
 
 			&:last-of-type, // The last page, the leftmost slide for all other pages (below)
 			&:nth-of-type(#{$n}n-#{$n - 1}):not(:nth-last-of-type(-n+#{$n})) {
-				display: inline;
+				display: inline-block;
 			}
 		} @else { // Hide dots for non left-most slides on last page
 			&:nth-last-of-type(-n+#{$n - 1}) {
