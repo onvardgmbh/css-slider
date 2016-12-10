@@ -7,31 +7,31 @@ $css-slider-transition-duration: .5s !default;
 @mixin slider-base () {
 	position: relative; // Position children relative to the slider
 
-	> input {
+	> input[type="radio"] {
 		display: none; // Hide the radio buttons
 	}
 
-	> .slides {
+	&__slides {
 		font-size: 0; // Ignore whitespace between elements with display:inline-block
 		overflow: hidden; // Hide slides that scroll off to the sides
 		white-space: nowrap; // Keep the slides on one line
 		list-style-type: none; // No bullets
 		padding-left: 0; // Remove list-padding for bullets
-
-		> li {
-			display: inline-block; // Put all slides on one line
-			width: 100%; // One slide per page by default
-			font-size: 15px; // For "browsers" that do not support :initial
-			font-size: initial; // For all real browsers
-			vertical-align: top; // Default of middle is usually not what we want
-			white-space: normal; // Reset because of :nowrap above
-			box-sizing: border-box; // Width:100% should include padding
-			transition: transform $css-slider-transition-duration,
-				width $css-slider-transition-duration;
-		}
 	}
 
-	> .dots {
+	&__slide {
+		display: inline-block; // Put all slides on one line
+		width: 100%; // One slide per page by default
+		font-size: 15px; // For "browsers" that do not support :initial
+		font-size: initial; // For all real browsers
+		vertical-align: top; // Default of middle is usually not what we want
+		white-space: normal; // Reset because of :nowrap above
+		box-sizing: border-box; // Width:100% should include padding
+		transition: transform $css-slider-transition-duration,
+			width $css-slider-transition-duration;
+	}
+
+	&__dots {
 		position: absolute;
 		left: 50%; // Center horizontally, part 1 ...
 		transform: translate(-50%); // ... part 2
@@ -39,58 +39,58 @@ $css-slider-transition-duration: .5s !default;
 		white-space: nowrap; // Keep dots on one line
 		margin-top: 10px; // Put dots under the slides
 
-		&.inside {
+		&--inside {
 			margin-top: -10px; // Put dots inside the slides
 		}
+	}
 
-		> label {
-			cursor: pointer; // Convey clickability
-			background-color: #eee;
+	&__dot {
+		cursor: pointer; // Convey clickability
+		background-color: #eee;
+		border-radius: 50%;
+		padding: 5px;
+
+		&:not(:last-child) {
+			margin-right: 5px; // Spacing between dots
+		}
+
+		&::before {
+			content: '';
+			background-color: #fa0;
 			border-radius: 50%;
-			padding: 5px;
+			padding: 3px;
+			position: absolute; // Do not take up space in the label
+			transform: translate(-50%, -50%); // Center
+			opacity: 0;
+		}
 
-			&:not(:last-child) {
-				margin-right: 5px; // Spacing between dots
-			}
-
+		&:hover {
 			&::before {
-				content: '';
-				background-color: #fa0;
-				border-radius: 50%;
-				padding: 3px;
-				position: absolute; // Do not take up space in the label
-				transform: translate(-50%, -50%); // Center
-				opacity: 0;
-			}
-
-			&:hover {
-				&::before { 
-					opacity: 1;
-				}
+				opacity: 1;
 			}
 		}
 	}
 
-	> .arrows {
+	&__arrows {
 		position: absolute; // Take the arrows out of the flow
 		height: 100%; // Stretch the arrow container to slider height
 		top: 0; // Align with slider
 
-		> label {
-			display: none; // Hide all arrows by default
-			position: relative; // Take up space, so we push the container left
-			top: 50%; // Center vertically, part 1...
-			transform: translateY(-50%); // ...part 2
-			user-select: none; // Do not select arrows if user double clicks
-			font-size: 3em;
-		}
-
-		&.left {
+		&--left {
 			right: 100%; // Left of the slider
 		}
 
-		&.right {
+		&--right {
 			left: 100%; // Right of the slider
 		}
+	}
+
+	&__arrow {
+		display: none; // Hide all arrows by default
+		position: relative; // Take up space, so we push the container left
+		top: 50%; // Center vertically, part 1...
+		transform: translateY(-50%); // ...part 2
+		user-select: none; // Do not select arrows if user double clicks
+		font-size: 3em;
 	}
 }
