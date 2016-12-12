@@ -1,11 +1,9 @@
 @mixin paginate($n, $wrap: true, $scroll-full-page: true) {
-	> .slides > li {width: 100% / $n}
+	$B: &; // Store the block class
 
-	> .arrows > label {
-		display: none; // Hide all arrows by default
-	}
+	&__slide {width: 100% / $n}
 
-	> .dots > label {
+	&__dot {
 		@if $scroll-full-page { // Show only one dot per page
 			display: none; // Hide all dots
 
@@ -19,27 +17,27 @@
 			}
 		}
 	}
-	> input:nth-last-of-type(#{$n}):checked ~ .dots > label:last-of-type:before {
+
+	//TODO needed?
+	> input[type="radio"]:nth-last-of-type(#{$n}):checked ~ #{$B}__dots #{$B}__dot:last-of-type::before {
 		opacity: 1;
 	}
 
 	// For all possible checked radios
 	// Loop indices are 0-based, :nth-x selectors are 1-based, take care
 	@for $i from 0 to $css-slider-max-slides {
-		> input:nth-of-type(#{$i + 1}):checked {
-			//TODO Highlight current dot
-
+		> input[type="radio"]:nth-of-type(#{$i + 1}):checked {
 			@if $wrap {
 				// Left arrow on first page, goes to last slide
 				@if $scroll-full-page {
 					&:nth-of-type(-n+#{$n}) {
-						~ .arrows:not(.right) > label:last-child {
+						~ #{$B}__arrows--left #{$B}__arrow:last-child {
 							display: block;
 						}
 					}
 				} @else {
 					&:first-of-type {
-						~ .arrows:not(.right) > label:last-child {
+						~ #{$B}__arrows--left #{$B}__arrow:last-child {
 							display: block;
 						}
 					}
@@ -47,7 +45,7 @@
 
 				// Right arrow on last page, goes to first slide
 					&:nth-last-of-type(-n+#{$n}) {
-						~ .arrows:not(.left) > label:first-child {
+						~ #{$B}__arrows--right #{$B}__arrow:first-child {
 							display: block;
 						}
 					}
@@ -56,13 +54,13 @@
 			@if $scroll-full-page and $n > 1 {
 				// Left arrow on standard pages
 				@if $i >= $n {
-					~ .arrows:not(.right) > label:nth-of-type(#{($i - $i % $n) - $n + 1}) {
+					~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{($i - $i % $n) - $n + 1}) {
 						display: block;
 					}
 				}
 
 				// Right arrow on standard pages
-				~ .arrows:not(.left) > label:nth-of-type(#{($i - $i % $n) + $n + 1}) {
+				~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{($i - $i % $n) + $n + 1}) {
 					&:not(:nth-last-of-type(-n+#{$n})) {
 						display: block;
 					}
@@ -70,14 +68,14 @@
 
 				// Right arrow to last page
 				&:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
-					~ .arrows:not(.left) > label:last-child {
+					~ #{$B}__arrows--right #{$B}__arrow:last-child {
 						display: block;
 					}
 				}
 
 				// Current dot
-				~ .dots > label:nth-of-type(#{$i - $i % $n + 1})::before,
-				&:last-of-type ~ .dots > label:last-of-type::before {
+				~ #{$B}__dots > #{$B}__dot:nth-of-type(#{$i - $i % $n + 1})::before,
+				&:last-of-type ~ #{$B}__dots > #{$B}__dot:last-of-type::before {
 					opacity: 1;
 				}
 
@@ -85,7 +83,7 @@
 				// For radios on all pages except the last
 				&:not(:nth-last-of-type(-n+#{$n})) {
 					// Slide left by full page-widths
-					~ .slides > li {
+					~ #{$B}__slides #{$B}__slide {
 						transform: translate3d(($i - $i % $n) * -100%, 0, 0);
 					}
 				}
@@ -94,39 +92,39 @@
 				// Left arrow
 				@if $i > 0 {
 					&:not(:nth-last-of-type(-n+#{$n})) {
-						~ .arrows:not(.right) > label:nth-of-type(#{$i}) {
+						~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{$i}) {
 							display: block;
 						}
 					}
 
 					&:nth-last-of-type(-n+#{$n}) {
-						~ .arrows:not(.right) > label:nth-last-of-type(#{$n + 1}) {
+						~ #{$B}__arrows--left #{$B}__arrow:nth-last-of-type(#{$n + 1}) {
 							display: block;
 						}
 					}
 				}
 
 				// Right arrow
-				&:not(:nth-last-of-type(-n+#{$n})) ~ .arrows:not(.left) > label:nth-of-type(#{$i + 2}) {
+				&:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{$i + 2}) {
 					display: block;
 				}
 
 				// Current dot
 				&:not(:nth-last-of-type(-n+#{$n})) {
-					~ .dots label:nth-of-type(#{$i + 1 })::before {
+					~ #{$B}__dots #{$B}__dot:nth-of-type(#{$i + 1 })::before {
 						opacity: 1;
 					}
 				}
 
 				&:nth-last-of-type(-n+#{$n}) {
-					~ .dots label:nth-last-of-type(#{$n})::before {
+					~ #{$B}__dots #{$B}__dot:nth-last-of-type(#{$n})::before {
 						opacity: 1;
 					}
 				}
 
 				// Slide the slides
 				&:not(:nth-last-of-type(-n+#{$n})) {
-					~ .slides > li {
+					~ #{$B}__slides #{$B}__slide {
 						transform: translate3d($i * -100%, 0, 0);
 					}
 				}
@@ -136,7 +134,7 @@
 			@for $j from 0 to $n { // Nested loop! Keep this short
 				&:nth-last-of-type(#{$n - $j}) {
 					// Slide to the last page
-					~ .slides > li {
+					~ #{$B}__slides #{$B}__slide {
 						// Slide #{$i - $j} is always the left-most slide on the last page
 						transform: translate3d(($i - $j) * -100%, 0, 0);
 					}
