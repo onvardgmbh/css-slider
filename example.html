@@ -8,17 +8,6 @@
 
 <h1>Responsive multi-column plain-CSS-Slider</h1>
 
-<!-- Column number chooser -->
-Columns
-<input type="radio" id="set-cols-1" name="set-cols">
-	<label for="set-cols">1</label>
-<input type="radio" id="set-cols-2" name="set-cols">
-	<label for="set-cols">2</label>
-<input type="radio" id="set-cols-3" name="set-cols" checked>
-	<label for="set-cols">3</label>
-<input type="radio" id="set-cols-4" name="set-cols">
-	<label for="set-cols">4</label>
-
 <div class="css-slider">
 
 	<!-- 1: A radio button for each slide -->
@@ -31,8 +20,9 @@ Columns
 	<input type="radio" name="slider1" id="slider1-6">
 	<input type="radio" name="slider1" id="slider1-7">
 
-	<!-- 2: A list with class 'slides' containing the slides -->
-	<ul class="css-slider__slides">
+	<!-- 2: A list with class '#{$slider-class}__slides' containing the slides -->
+	<ul class="slides css-slider__slides">
+		<!-- The slides should have class '#{$slider-class}__slide' -->
 		<li class="css-slider__slide">Slide 1</li>
 		<li class="css-slider__slide">Slide 2</li>
 		<li class="css-slider__slide">Slide 3</li>
@@ -43,8 +33,9 @@ Columns
 		<li class="css-slider__slide">Slide 8</li>
 	</ul>
 
-	<!-- 3: A div with class 'dots' containing labels for all radios -->
-	<div class="css-slider__dots">
+	<!-- 3: A div with class '#{$slider-class}__dots' containing labels for all radios -->
+	<div class="dots css-slider__dots">
+		<!-- The dots should have class '#{$slider-class}__dot' -->
 		<label class="css-slider__dot" for="slider1-0"></label>
 		<label class="css-slider__dot" for="slider1-1"></label>
 		<label class="css-slider__dot" for="slider1-2"></label>
@@ -55,10 +46,10 @@ Columns
 		<label class="css-slider__dot" for="slider1-7"></label>
 	</div>
 
-	<!-- 3: Either a single div with class 'arrows' containing labels
-	for all radios, or two divs with class 'arrows' and classes 'left'
-	and 'right' respectively -->
+	<!-- 3: Two divs with class '#{$slider-class}__arrows' containing labels
+	for all radios, with modifiers '--left' and '--right' respectively -->
 	<div class="css-slider__arrows css-slider__arrows--left">
+		<!-- The arrows themselves should have class '#{$slider-class}__arrow' -->
 		<label class="css-slider__arrow" for="slider1-0">&larr;</label>
 		<label class="css-slider__arrow" for="slider1-1">&larr;</label>
 		<label class="css-slider__arrow" for="slider1-2">&larr;</label>
