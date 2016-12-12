@@ -9,28 +9,28 @@ $css-slider-max-slides: 20;
 $css-slider-transition-duration: .5s;
 
 .css-slider {
-	// Include the basic slider styles
-	@include slider-base();
+  // Include the basic slider styles
+  @include slider-base();
 
-	// Style your container however you need
-	margin: 0 5em;
-	background-color: #0af;
+  // Style your container however you need
+  margin: 0 5em;
+  background-color: #0af;
 
 
-	// Same for the slides
-	&__slide {
-		min-height: 300px;
-		padding: 1em;
-	}
+  // Same for the slides
+  &__slide {
+    min-height: 300px;
+    padding: 1em;
+  }
 
-	// Add your paginations. You need at least one or the slider will not work
-	@media (max-width: 800px) {
-		@include paginate(2);
-	}
+  // Add your paginations. You need at least one or the slider will not work
+  @media (max-width: 800px) {
+    @include paginate(2);
+  }
 
-	// Add as many ulti column configurations as you want
-	@media (min-width: 801px) {
-		@include paginate(3);
-	}
+  // Add as many ulti column configurations as you want
+  @media (min-width: 801px) {
+    @include paginate(3);
+  }
 }
 
