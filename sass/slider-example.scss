@@ -18,24 +18,19 @@ $css-slider-transition-duration: .5s;
 
 
 	// Same for the slides
-	> .slides > li {
+	&__slide {
 		min-height: 300px;
 		padding: 1em;
 	}
 
 	// Add your paginations. You need at least one or the slider will not work
-	@media (max-width: 400px) {
-		@include paginate(3);
+	@media (max-width: 800px) {
+		@include paginate(2);
 	}
 
 	// Add as many ulti column configurations as you want
-	@media (min-width: 401px) {
-		// Column number chooser
-		@for $i from 1 through 4 {
-			@at-root input[name="set-cols"]:nth-of-type(#{$i}):checked ~ & {
-				@include paginate($i);
-			}
-		}
+	@media (min-width: 801px) {
+		@include paginate(3);
 	}
 }
 
