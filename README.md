@@ -32,22 +32,63 @@ Plain CSS Slider with responsive pagination.
 }
 ```
 
-## `$wrap: true`
+## Options
+### `$wrap: true`
 Show a left arrow to the last page on the first page and vice versa or not.
 
 ```scss
 @include paginate(2, $wrap: false); // No wrapping arrows on first and last slide
 ```
 
-## `$scroll-full-page: true`
+### `$scroll-full-page: true`
 Arrows scroll either a full page or a single slide.
 
 ```scss
 @include paginate(2, $scroll-full-page: false); // Arrows scroll single slides
 ```
 
-## TODO
-- Arrow right to last page shown in some off-grid cases it shouldn't
-- Single slide mode sliding last page too far if `input:nth-last-child(-n+#{$n-1}):checked`
-- Mobile swipe script always slides full pages
-- Make `$wrap` and `$scroll-full-page` configurable by setting a class instead of passing params
+## Markup
+Markup example in [blade syntax](https://laravel.com/docs/master/blade):
+```blade
+@php
+	$sliderClass = 'css-slider';
+	$sliderName = 'slider1';
+@endphp
+
+<div class="{{ $sliderClass }}">
+
+	{{-- The radio buttons controlling everything --}}
+	@foreach ($slides as $slide)
+		<input type="radio" name="{{ $sliderName }}" id="{{ $sliderName }}-{{ $loop->index }}"{{ $loop->index ? '' : ' checked' }}>
+	@endforeach
+
+	{{-- The slides --}}
+	<ul class="{{ $sliderClass }}__slides">
+		@foreach ($slides as $slide)
+			<li class="{{ $sliderClass }}__slide">{{ $slide->content }}</li>
+		@endforeach
+	</ul>
+
+	{{-- Dots to select arbitrary page and see number of pages --}}
+	<div class="{{ $sliderClass }}__dots">
+		@foreach ($slides as $slide)
+			<label class="{{ $sliderClass }}__dot" for="{{ $sliderName }}-{{ $loop->index }}"></label>
+		@endforeach
+	</div>
+
+	{{-- Arrows to previous page --}}
+	<div class="{{ $sliderClass }}__arrows {{ $sliderClass }}__arrows--left">
+		@foreach ($slides as $slide)
+			<label class="{{ $sliderClass }}__arrow" for="{{ $sliderName }}-{{ $loop->index }}">&larr;</label>
+		@endforeach
+	</div>
+
+	{{-- Arrows to next page --}}
+	<div class="{{ $sliderClass }}__arrows {{ $sliderClass }}__arrows--right">
+		@foreach ($slides as $slide)
+			<label class="{{ $sliderClass }}__arrow" for="{{ $sliderName }}-{{ $loop->index }}">&rarr;</label>
+		@endforeach
+	</div>
+
+</div>
+```
