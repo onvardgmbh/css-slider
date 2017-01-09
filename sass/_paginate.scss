@@ -31,13 +31,15 @@
         // Left arrow on first page, goes to last slide
         @if $scroll-full-page {
           &:nth-of-type(-n+#{$n}) {
-            ~ #{$B}__arrows--left #{$B}__arrow:last-child {
+            ~ #{$B}__arrows--left #{$B}__arrow:last-child,
+            ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:last-child {
               display: block;
             }
           }
         } @else {
           &:first-of-type {
-            ~ #{$B}__arrows--left #{$B}__arrow:last-child {
+            ~ #{$B}__arrows--left #{$B}__arrow:last-child,
+            ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:last-child {
               display: block;
             }
           }
@@ -45,7 +47,8 @@
 
         // Right arrow on last page, goes to first slide
           &:nth-last-of-type(-n+#{$n}) {
-            ~ #{$B}__arrows--right #{$B}__arrow:first-child {
+            ~ #{$B}__arrows--right #{$B}__arrow:first-child,
+            ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:first-child {
               display: block;
             }
           }
@@ -54,13 +57,15 @@
       @if $scroll-full-page and $n > 1 {
         // Left arrow on standard pages
         @if $i >= $n {
-          ~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{($i - $i % $n) - $n + 1}) {
+          ~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{($i - $i % $n) - $n + 1}),
+          ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{($i - $i % $n) - $n + 1}) {
             display: block;
           }
         }
 
         // Right arrow on standard pages
-        ~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{($i - $i % $n) + $n + 1}) {
+        ~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{($i - $i % $n) + $n + 1}),
+        ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{($i - $i % $n) + $n + 1}) {
           &:not(:nth-last-of-type(-n+#{$n})) {
             display: block;
           }
@@ -68,7 +73,8 @@
 
         // Right arrow to last page
         &:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
-          ~ #{$B}__arrows--right #{$B}__arrow:last-child {
+          ~ #{$B}__arrows--right #{$B}__arrow:last-child,
+          ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:last-child {
             display: block;
           }
         }
@@ -92,20 +98,23 @@
         // Left arrow
         @if $i > 0 {
           &:not(:nth-last-of-type(-n+#{$n})) {
-            ~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{$i}) {
+            ~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{$i}),
+            ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{$i}) {
               display: block;
             }
           }
 
           &:nth-last-of-type(-n+#{$n}) {
-            ~ #{$B}__arrows--left #{$B}__arrow:nth-last-of-type(#{$n + 1}) {
+            ~ #{$B}__arrows--left #{$B}__arrow:nth-last-of-type(#{$n + 1}),
+            ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:nth-last-of-type(#{$n + 1}) {
               display: block;
             }
           }
         }
 
         // Right arrow
-        &:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{$i + 2}) {
+        &:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{$i + 2}),
+        &:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{$i + 2}) {
           display: block;
         }
 
