@@ -63,7 +63,7 @@
           ? active - (active % perPage || perPage) // Next page to the left
           : active - active % perPage + perPage // Next page to the right
         ));
-        radios[next].setAttribute('checked', 'checked');
+        radios[next].checked = true;
       }
       Array.prototype.forEach.call(
         slides,
