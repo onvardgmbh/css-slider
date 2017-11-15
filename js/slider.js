@@ -46,11 +46,11 @@ function setupSlider(slider) {
         return;
       }
 
-      slider.classList.add('moving'); // eslint-disable-line no-param-reassign
+      slider.classList.add('moving');
 
       // Disable transitions during swiping
       slides.forEach((slide) => {
-        slide.style.transition = 'none'; // eslint-disable-line no-param-reassign
+        slide.style.transition = 'none';
       });
     }
 
@@ -62,7 +62,7 @@ function setupSlider(slider) {
     ));
 
     slides.forEach((slide) => {
-      slide.style.transform = `translate3d(${firstSlide.offsetWidth * -offset}px, 0, 0)`; // eslint-disable-line no-param-reassign
+      slide.style.transform = `translate3d(${firstSlide.offsetWidth * -offset}px, 0, 0)`;
     });
   }
 
@@ -79,11 +79,11 @@ function setupSlider(slider) {
       setActive(next);
     }
 
-    slider.classList.remove('moving'); // eslint-disable-line no-param-reassign
+    slider.classList.remove('moving');
 
     slides.forEach((slide) => {
-      slide.style.transition = ''; // eslint-disable-line no-param-reassign
-      slide.style.transform = ''; // eslint-disable-line no-param-reassign
+      slide.style.transition = '';
+      slide.style.transform = '';
     });
 
     // Remove event listeners that are only needed during drag

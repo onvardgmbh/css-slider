@@ -5,9 +5,15 @@
   "license": "MIT",
   "repository": "https://github.com/onvardgmbh/css-slider.git",
   "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
     "gulp": "3.9.*",
+    "gulp-autoprefixer": "3.1.*",
     "gulp-sass": "2.3.*",
-    "gulp-sourcemaps": "1.6.*",
-    "gulp-autoprefixer": "3.1.*"
+    "gulp-sourcemaps": "1.6.*"
+  },
+  "scripts": {
+    "eslint": "eslint js/"
   }
 }
