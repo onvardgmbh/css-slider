@@ -2,9 +2,7 @@ root = true
 
 [*]
 end_of_line = lf
+indent_size = 2
+indent_style = space
 insert_final_newline = true
 charset = utf-8
-
-[*.{js,json,scss}]
-indent_style = spaces
-indent_size = 2
