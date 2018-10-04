@@ -11,29 +11,22 @@ const sourcemaps = require('gulp-sourcemaps');
 const src = 'sass/**/*.scss';
 const dest = 'dist';
 
-gulp.task('default', ['sass'])
+gulp.task('default', ['sass']);
 
-gulp.task('sass', function() {
-	return gulp
-		.src(src)
-		.pipe(sourcemaps.init())
-		.pipe(sass())
-		.pipe(sourcemaps.write())
-		.pipe(autoprefixer())
-		.pipe(gulp.dest(dest));
-});
+gulp.task('sass', () => gulp
+  .src(src)
+  .pipe(sourcemaps.init())
+  .pipe(sass())
+  .pipe(sourcemaps.write())
+  .pipe(autoprefixer())
+  .pipe(gulp.dest(dest)));
 
-gulp.task('dist', function() {
-	return gulp
-		.src(src)
-		.pipe(sass({outputStyle: 'compressed'}))
-		.pipe(gulp.dest(dest));
-});
+gulp.task('dist', () => gulp
+  .src(src)
+  .pipe(sass({ outputStyle: 'compressed' }))
+  .pipe(gulp.dest(dest)));
 
-gulp.task('watch', ['sass'], function() {
-	return gulp
-		.watch(src, ['sass'])
-		.on('change', function(event) {
-			console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-		});
-});
+gulp.task('watch', ['sass'], () => gulp
+  .watch(src, ['sass'])
+  .on('change', event =>
+    console.log(`File ${event.path} was ${event.type}, running tasks...`))); // eslint-disable-line no-console
