@@ -14,6 +14,8 @@
     "gulp-sourcemaps": "1.6.*"
   },
   "scripts": {
-    "eslint": "eslint js/"
+    "build": "gulp",
+    "eslint": "eslint js/",
+    "watch": "gulp watch"
   }
 }
