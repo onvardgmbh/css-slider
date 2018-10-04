@@ -14,13 +14,16 @@ $css-slider-transition-duration: .5s;
 
   // Style your container however you need
   margin: 0 5em;
-  background-color: #0af;
-
 
   // Same for the slides
   &__slide {
     min-height: 300px;
     padding: 1em;
+    background-color: #0af;
+
+    &:nth-child(2n) {
+      background-color: #af0;
+    }
   }
 
   // Add your paginations. You need at least one or the slider will not work
