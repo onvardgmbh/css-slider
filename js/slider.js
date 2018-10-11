@@ -1,7 +1,12 @@
 function setupSlider(slider) {
   const firstSlide = slider.querySelector('ul > li:first-of-type');
-  const slides = slider.querySelectorAll('ul > li');
+  const slideContainer = slider.querySelector('ul[class*="__slides"]');
+  const slides = Array.prototype.slice.call(slider.querySelectorAll('ul > li'));
   const radios = Array.prototype.slice.call(slider.querySelectorAll('input'));
+  const arrows = {
+    previous: Array.prototype.slice.call(slider.querySelectorAll('*[class*="__arrows--left"] > label[class*="__arrow"]')),
+    next: Array.prototype.slice.call(slider.querySelectorAll('*[class*="__arrows--right"] > label[class*="__arrow"]')),
+  };
   const dragListeners = {};
   let touchStartX;
   let touchStartY;
@@ -9,15 +14,68 @@ function setupSlider(slider) {
   let deltaY;
   let scrollingChecked;
 
-  function getActive() {
+  function getWidth(el /*: HTMLElement */) /*: number */ {
+    return +window.getComputedStyle(el).width.slice(0, -2);
+  }
+
+  function getSlidesPerPage() /*: number */ {
+    return slides.length < 1 ? 0 : Math.round(getWidth(slider) / getWidth(slides[0]));
+  }
+
+  function getPageCount() /*: number */ {
+    return Math.ceil(slides.length / getSlidesPerPage());
+  }
+
+  function getActiveSlide() /*: number */ {
     return radios
       .map(el => el.checked)
       .indexOf(true);
   }
 
-  function setActive(index) {
-    radios[index].checked = true;
+  function setActiveSlide(slideIndex /*: number */) {
+    radios[slideIndex].checked = true;
   }
+
+  function getActivePage() /*: number */ {
+    const activeSlideIndex = getActiveSlide();
+    return activeSlideIndex === slides.length - 1 ? -1 // TODO -1 for other slides on last page
+      : Math.floor(activeSlideIndex / getSlidesPerPage());
+  }
+
+  function setActivePage(pageIndex /*: number */) {
+    const normalizedIndex = pageIndex < 0 ? getPageCount() - pageIndex : pageIndex;
+    setActiveSlide(normalizedIndex === getPageCount() - 1
+      ? slides.length - 1 //  On the last page, focus the last slide
+      : normalizedIndex * getSlidesPerPage()); // On other pages, focus first slide on page
+  }
+
+  function getPageWithSlide(slide /*: HTMLElement */) /*: number */ {
+    const spp = getSlidesPerPage();
+    const i = slides.indexOf(slide);
+    return Math.floor(i / spp); //TODO
+  }
+
+  function nextPage() {
+    setActiveSlide(arrows.next.findIndex(el =>
+      window.getComputedStyle(el).display === 'block'));
+  }
+
+  function previousPage() {
+    setActiveSlide(arrows.previous.findIndex(el =>
+      window.getComputedStyle(el).display === 'block'));
+  }
+
+  // DEBUG Make functions available for testing in browser console
+  window.getWidth = getWidth;
+  window.getSlidesPerPage = getSlidesPerPage;
+  window.getPageCount = getPageCount;
+  window.getActiveSlide = getActiveSlide;
+  window.setActiveSlide = setActiveSlide;
+  window.getActivePage = getActivePage;
+  window.setActivePage = setActivePage;
+  window.getPageWithSlide = getPageWithSlide;
+  window.nextPage = nextPage;
+  window.previousPage = previousPage;
 
   function onTouchstart(event) {
     const touch = event.touches ? event.touches[0] : event;
@@ -58,7 +116,7 @@ function setupSlider(slider) {
 
     const offset = Math.max(0, Math.min(
       slides.length - (firstSlide.parentNode.clientWidth / firstSlide.offsetWidth),
-      getActive() + (deltaX / -firstSlide.offsetWidth)
+      getActiveSlide() + (deltaX / -firstSlide.offsetWidth)
     ));
 
     slides.forEach((slide) => {
@@ -72,16 +130,16 @@ function setupSlider(slider) {
     const perPage = Math.round(firstSlide.parentNode.clientWidth / firstSlide.offsetWidth);
 
     if (Math.abs(deltaX) > firstSlide.offsetWidth / 4) {
-      const active = getActive();
+      const active = getActiveSlide();
       const next = Math.max(0, Math.min(radios.length - perPage, deltaX > 0
         ? active - (active % perPage || perPage) // Next page to the left
         : active - ((active % perPage) + perPage))); // Next page to the right
-      setActive(next);
+      setActiveSlide(next);
     }
 
     slider.classList.remove('moving');
 
-    slides.forEach((slide) => {
+    slides.forEach((slide /*: HTMLElement */) => {
       slide.style.transition = '';
       slide.style.transform = '';
     });
@@ -94,6 +152,27 @@ function setupSlider(slider) {
   dragListeners.touchend = onTouchend;
 
   slider.addEventListener('touchstart', onTouchstart);
+
+  function onFocus(i /*: number */) /*: function */ {
+    return (event /*: FocusEvent */) => {
+      console.log(`focus on slide #${i} active: ${getActiveSlide()} s/p: ${getSlidesPerPage()} should be page ${getPageWithSlide(slides[i])}`);
+      const targetPage = getPageWithSlide(slides[i]);
+      const spp = getSlidesPerPage();
+      if (getActiveSlide() !== targetPage * spp && (i < slides.length - spp || getActiveSlide() < slides.length - 1)) {
+        setActiveSlide(spp * targetPage);
+        slideContainer.scrollLeft = 0; // Reset the browsers native "scroll into view"
+      }
+    };
+  }
+
+  slides.forEach((slide /*: HTMLElement */, i /*: number */) => {
+    slide.addEventListener('focus', onFocus(i), true);
+  });
+
+  // TODO DEBUG
+  window.slider = slider;
+  window.slides = slides;
+  window.radios = radios;
 }
 
 /**
