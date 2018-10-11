@@ -20,11 +20,6 @@
     }
   }
 
-  //TODO needed?
-  > input[type="radio"]:nth-last-of-type(#{$n}):checked ~ #{$B}__dots #{$B}__dot:last-of-type::before {
-    opacity: 1;
-  }
-
   // For all possible checked radios
   // Loop indices are 0-based, :nth-x selectors are 1-based, take care
   @for $i from 0 to $css-slider-max-slides {
@@ -88,8 +83,8 @@
         }
 
         // Current dot
-        ~ #{$B}__dots > #{$B}__dot:nth-of-type(#{$i - $i % $n + 1})::before,
-        &:last-of-type ~ #{$B}__dots > #{$B}__dot:last-of-type::before {
+        &:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__dots > #{$B}__dot:nth-of-type(#{$i - $i % $n + 1})::before,
+        &:nth-last-of-type(-n+#{$n}) ~ #{$B}__dots > #{$B}__dot:last-of-type::before {
           --debug: "Current dot (full-page)";
           opacity: 1;
         }
