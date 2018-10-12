@@ -50,9 +50,8 @@ function setupSlider(slider) {
   }
 
   function getPageWithSlide(slide /*: HTMLElement */) /*: number */ {
-    const spp = getSlidesPerPage();
     const i = slides.indexOf(slide);
-    return Math.floor(i / spp); //TODO
+    return Math.floor(i / getSlidesPerPage());
   }
 
   function nextPage() {
@@ -64,18 +63,6 @@ function setupSlider(slider) {
     setActiveSlide(arrows.previous.findIndex(el =>
       window.getComputedStyle(el).display === 'block'));
   }
-
-  // DEBUG Make functions available for testing in browser console
-  window.getWidth = getWidth;
-  window.getSlidesPerPage = getSlidesPerPage;
-  window.getPageCount = getPageCount;
-  window.getActiveSlide = getActiveSlide;
-  window.setActiveSlide = setActiveSlide;
-  window.getActivePage = getActivePage;
-  window.setActivePage = setActivePage;
-  window.getPageWithSlide = getPageWithSlide;
-  window.nextPage = nextPage;
-  window.previousPage = previousPage;
 
   function onTouchstart(event) {
     const touch = event.touches ? event.touches[0] : event;
@@ -154,11 +141,12 @@ function setupSlider(slider) {
   slider.addEventListener('touchstart', onTouchstart);
 
   function onFocus(i /*: number */) /*: function */ {
-    return (event /*: FocusEvent */) => {
-      console.log(`focus on slide #${i} active: ${getActiveSlide()} s/p: ${getSlidesPerPage()} should be page ${getPageWithSlide(slides[i])}`);
+    return () => {
       const targetPage = getPageWithSlide(slides[i]);
       const spp = getSlidesPerPage();
-      if (getActiveSlide() !== targetPage * spp && (i < slides.length - spp || getActiveSlide() < slides.length - 1)) {
+      if (getActiveSlide() !== targetPage * spp
+        && (i < slides.length - spp || getActiveSlide() < slides.length - 1)
+      ) {
         setActiveSlide(spp * targetPage);
         slideContainer.scrollLeft = 0; // Reset the browsers native "scroll into view"
       }
@@ -169,10 +157,22 @@ function setupSlider(slider) {
     slide.addEventListener('focus', onFocus(i), true);
   });
 
-  // TODO DEBUG
+  /* Uncomment for debugging
   window.slider = slider;
   window.slides = slides;
   window.radios = radios;
+
+  window.getWidth = getWidth;
+  window.getSlidesPerPage = getSlidesPerPage;
+  window.getPageCount = getPageCount;
+  window.getActiveSlide = getActiveSlide;
+  window.setActiveSlide = setActiveSlide;
+  window.getActivePage = getActivePage;
+  window.setActivePage = setActivePage;
+  window.getPageWithSlide = getPageWithSlide;
+  window.nextPage = nextPage;
+  window.previousPage = previousPage;
+  */
 }
 
 /**
