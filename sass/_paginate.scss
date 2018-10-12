@@ -21,12 +21,30 @@
   }
 
   // Right arrow to last page
-  // FIXME Do not show on last slides of 3rd last page in case last and 2nd last page overlap
-  > input[type="radio"]:checked:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
-    ~ #{$B}__arrows--right #{$B}__arrow:last-child,
-    ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:last-child {
-      --debug: "Right arrow to last page (full-page)";
-      display: block;
+  @if ($n > 1) {
+    > input[type="radio"]:checked:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
+      // If one of the second-last set of $n slides is active, i.e. any slide up to $n before the last page
+      @for $slide from 0 to $n { // For each of those $n slides
+        &:nth-last-of-type(#{2 * $n - $slide}) { // Going from left to right
+          @for $overlap from 0 to $slide + 1 { // For each possible overlap of the second-last and last page
+            &:nth-of-type(#{$n}n+#{$overlap + 1})) { // Only if slide is not on 3rd last page
+              ~ #{$B}__arrows--right #{$B}__arrow:last-child,
+              ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:last-child {
+                /* Right arrow to last page (full-page) slide:#{$slide} overlap:#{$overlap} */
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  } @else {
+    > input[type="radio"]:checked:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
+      ~ #{$B}__arrows--right #{$B}__arrow:last-child,
+      ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:last-child {
+        /* Right arrow to last page (full-page) single column */
+        display: block;
+      }
     }
   }
 
