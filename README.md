@@ -101,3 +101,24 @@ Markup example in [blade syntax](https://laravel.com/docs/master/blade):
 
 </div>
 ```
+
+## Terminology and Logic
+This section tries to explain the core logic and terminology behind the slider pagination and is mostly for developers, not users.
+
+### Slides and pages
+- **Slide**: A single slide, the slide which belongs to the selected radio is called "active", e.g. when the 3rd radio is `:checked`, the 3rd slide is active
+- **Page**: A set of `$n` slides that are displayed as columns of a page together, whenever any of the slides on the page is the active slide, except for the last page, which might overlap the second-last
+  + If `$scroll-full-page` is `false`, each set of `$n` consecutive slides is a page, not just the aligned (and the last) sets
+- **Non-last page**: An aligned page of `$columns` slides that is not the last page
+  + Canonical radio is the first on the page
+  + Should be active when any radio that is not for a slide contained only on the last page is selected
+- **Last page**: Can be aligned, or overlap the second-last page, so it is handled as a special case
+  + Canonical radio is the last one
+  + Should be active when any slide that is only on the last page is active
+
+### Arrows for scrolling pages
+- Arrows on the left and right of the page, leading to the previous and next page, or wrapping to the page on the other end if the first or last page is already active
+- Arrows should always target the canonical slide of the target page
+
+### Dots for directly navigating to pages
+- The dots allow directly navigating to each page, so the dot for the canonical slide for each page should be displayed

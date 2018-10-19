@@ -1,0 +1,24 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "brace-style": ["error", "1tbs", {
+      "allowSingleLine": false
+    }],
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }],
+    "curly": ["error", "all"],
+    "implicit-arrow-linebreak": "off",
+    "newline-per-chained-call": "off",
+    "no-param-reassign": ["error", {"props": false}],
+    "no-return-assign": "off",
+    "spaced-comment": "off"
+  }
+}

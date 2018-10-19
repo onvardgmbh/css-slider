@@ -1,4 +1,4 @@
-@mixin paginate($n, $wrap: true, $scroll-full-page: true) {
+@mixin paginate($n /* number of columns */, $wrap: true, $scroll-full-page: true) {
   $B: &; // Store the block class
 
   &__slide {width: 100% / $n}
@@ -9,18 +9,43 @@
 
       &:last-of-type, // The last page, the leftmost slide for all other pages (below)
       &:nth-of-type(#{$n}n-#{$n - 1}):not(:nth-last-of-type(-n+#{$n})) {
+        /* Show only dots for canonical slides (full-page) */
         display: inline-block;
       }
     } @else { // Hide dots for non left-most slides on last page
       &:nth-last-of-type(-n+#{$n - 1}) {
+        /* Show only dots for canonical slides (single-step) */
         display: none;
       }
     }
   }
 
-  //TODO needed?
-  > input[type="radio"]:nth-last-of-type(#{$n}):checked ~ #{$B}__dots #{$B}__dot:last-of-type::before {
-    opacity: 1;
+  // Right arrow to last page
+  @if ($n > 1) {
+    > input[type="radio"]:checked:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
+      // If one of the second-last set of $n slides is active, i.e. any slide up to $n before the last page
+      @for $slide from 0 to $n { // For each of those $n slides
+        &:nth-last-of-type(#{2 * $n - $slide}) { // Going from left to right
+          @for $overlap from 0 to $slide + 1 { // For each possible overlap of the second-last and last page
+            &:nth-of-type(#{$n}n+#{$overlap + 1})) { // Only if slide is not on 3rd last page
+              ~ #{$B}__arrows--right #{$B}__arrow:last-child,
+              ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:last-child {
+                /* Right arrow to last page (full-page) slide:#{$slide} overlap:#{$overlap} */
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  } @else {
+    > input[type="radio"]:checked:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
+      ~ #{$B}__arrows--right #{$B}__arrow:last-child,
+      ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:last-child {
+        /* Right arrow to last page (full-page) single column */
+        display: block;
+      }
+    }
   }
 
   // For all possible checked radios
@@ -33,6 +58,7 @@
           &:nth-of-type(-n+#{$n}) {
             ~ #{$B}__arrows--left #{$B}__arrow:last-child,
             ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:last-child {
+              /* Left arrow on first page for wrap (full page) */
               display: block;
             }
           }
@@ -40,18 +66,20 @@
           &:first-of-type {
             ~ #{$B}__arrows--left #{$B}__arrow:last-child,
             ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:last-child {
+              /* Left arrow on first page for wrap (single-step) */
               display: block;
             }
           }
         }
 
         // Right arrow on last page, goes to first slide
-          &:nth-last-of-type(-n+#{$n}) {
-            ~ #{$B}__arrows--right #{$B}__arrow:first-child,
-            ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:first-child {
-              display: block;
-            }
+        &:nth-last-of-type(-n+#{$n}) {
+          ~ #{$B}__arrows--right #{$B}__arrow:first-child,
+          ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:first-child {
+            /* Right arrow on last page for wrap */
+            display: block;
           }
+        }
       }
 
       @if $scroll-full-page and $n > 1 {
@@ -59,6 +87,7 @@
         @if $i >= $n {
           ~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{($i - $i % $n) - $n + 1}),
           ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{($i - $i % $n) - $n + 1}) {
+            /* Left arrow on standard page (full-page) */
             display: block;
           }
         }
@@ -67,21 +96,15 @@
         ~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{($i - $i % $n) + $n + 1}),
         ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{($i - $i % $n) + $n + 1}) {
           &:not(:nth-last-of-type(-n+#{$n})) {
-            display: block;
-          }
-        }
-
-        // Right arrow to last page
-        &:nth-last-of-type(n+#{$n + 1}):nth-last-of-type(-n+#{$n * 2}) {
-          ~ #{$B}__arrows--right #{$B}__arrow:last-child,
-          ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:last-child {
+            /* Right arrow on standard page (full-page) */
             display: block;
           }
         }
 
         // Current dot
-        ~ #{$B}__dots > #{$B}__dot:nth-of-type(#{$i - $i % $n + 1})::before,
-        &:last-of-type ~ #{$B}__dots > #{$B}__dot:last-of-type::before {
+        &:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__dots > #{$B}__dot:nth-of-type(#{$i - $i % $n + 1})::before,
+        &:nth-last-of-type(-n+#{$n}) ~ #{$B}__dots > #{$B}__dot:last-of-type::before {
+          /* Current dot (full-page) */
           opacity: 1;
         }
 
@@ -90,6 +113,7 @@
         &:not(:nth-last-of-type(-n+#{$n})) {
           // Slide left by full page-widths
           ~ #{$B}__slides #{$B}__slide {
+            /* Non-last page #{$i} */
             transform: translate3d(($i - $i % $n) * -100%, 0, 0);
           }
         }
@@ -100,6 +124,7 @@
           &:not(:nth-last-of-type(-n+#{$n})) {
             ~ #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{$i}),
             ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:nth-of-type(#{$i}) {
+              /* Left arrow on non-last page (single-step) */
               display: block;
             }
           }
@@ -107,6 +132,7 @@
           &:nth-last-of-type(-n+#{$n}) {
             ~ #{$B}__arrows--left #{$B}__arrow:nth-last-of-type(#{$n + 1}),
             ~ #{$B}__arrow-wrapper #{$B}__arrows--left #{$B}__arrow:nth-last-of-type(#{$n + 1}) {
+              /* Left arrow on last page (single-step) */
               display: block;
             }
           }
@@ -115,18 +141,21 @@
         // Right arrow
         &:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{$i + 2}),
         &:not(:nth-last-of-type(-n+#{$n})) ~ #{$B}__arrow-wrapper #{$B}__arrows--right #{$B}__arrow:nth-of-type(#{$i + 2}) {
+          /* Right arrow (single-step) */
           display: block;
         }
 
         // Current dot
         &:not(:nth-last-of-type(-n+#{$n})) {
           ~ #{$B}__dots #{$B}__dot:nth-of-type(#{$i + 1 })::before {
+            /* Current dot on non-last page (single-step) */
             opacity: 1;
           }
         }
 
         &:nth-last-of-type(-n+#{$n}) {
           ~ #{$B}__dots #{$B}__dot:nth-last-of-type(#{$n})::before {
+            /* Current dot on last page (single-step) */
             opacity: 1;
           }
         }
@@ -134,6 +163,7 @@
         // Slide the slides
         &:not(:nth-last-of-type(-n+#{$n})) {
           ~ #{$B}__slides #{$B}__slide {
+            /* Single-step */
             transform: translate3d($i * -100%, 0, 0);
           }
         }
@@ -145,6 +175,7 @@
           // Slide to the last page
           ~ #{$B}__slides #{$B}__slide {
             // Slide #{$i - $j} is always the left-most slide on the last page
+            /* Last page (slide #{$i}, #{$j} last) */
             transform: translate3d(($i - $j) * -100%, 0, 0);
           }
         }
