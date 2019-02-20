@@ -140,7 +140,7 @@
       }
 
       // Show last page for any of the last n radios
-      @if ($i > $n) {
+      @if ($i >= $n) {
         @for $j from 0 to $n { // Nested loop! Keep this short
           &:nth-last-of-type(#{$n - $j}) {
             // Slide to the last page
