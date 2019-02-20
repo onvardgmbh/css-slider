@@ -140,12 +140,14 @@
       }
 
       // Show last page for any of the last n radios
-      @for $j from 0 to $n { // Nested loop! Keep this short
-        &:nth-last-of-type(#{$n - $j}) {
-          // Slide to the last page
-          ~ #{$B}__slides #{$B}__slide {
-            // Slide #{$i - $j} is always the left-most slide on the last page
-            transform: translate3d(($i - $j) * -100%, 0, 0);
+      @if ($i > $n) {
+        @for $j from 0 to $n { // Nested loop! Keep this short
+          &:nth-last-of-type(#{$n - $j}) {
+            // Slide to the last page
+            ~ #{$B}__slides #{$B}__slide {
+              // Slide #{$i - $j} is always the left-most slide on the last page
+              transform: translate3d(($i - $j) * -100%, 0, 0);
+            }
           }
         }
       }
