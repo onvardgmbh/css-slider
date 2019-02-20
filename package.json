@@ -1,7 +1,7 @@
 {
   "name": "css-slider",
   "description": "Pure CSS Slider with resonsive pagination",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "license": "MIT",
   "private": true,
   "repository": "https://github.com/onvardgmbh/css-slider.git",
